@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
+import { getFirestore, collection, addDoc, getDocs  } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
  
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -34,3 +34,9 @@ function addData() {
       console.error("Error adding document: ", error);
     });
 }
+
+//Reading the data in real time using onSnapshot
+const querySnapshot = await getDocs(collection(db, "users"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${doc.data()}`);
+});
