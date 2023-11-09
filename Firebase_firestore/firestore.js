@@ -1,7 +1,14 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getFirestore, collection, addDoc, getDocs  } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
- 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  doc,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,7 +43,21 @@ function addData() {
 }
 
 //Reading the data in real time using onSnapshot
-const querySnapshot = await getDocs(collection(db, "users"));
-querySnapshot.forEach((doc) => {
-  console.log(`${doc.id} => ${doc.data()}`);
+const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
+  snapshot.docChanges().forEach((change) => {
+    //change.doc.metadata.hasPendingWrites to determine whether the change was made locally or on the server.
+    const changeType = change.doc.metadata.hasPendingWrites ? "Local" : "Server";
+    console.log(changeType + " change detected:", change.doc.data());
+  });
 });
+
+//Query snapshot
+// const querySnapshot = await getDocs(collection(db, "users"));
+// document.getElementById("result").innerHTML = ` `;
+// querySnapshot.forEach((doc) => {
+//   console.log(`${doc.id} => ${doc.data()}`);
+//   // Printing the user id in HTML page
+//   document.getElementById("result").innerHTML += `
+// <p>${doc.data().username} </p>
+// `;
+// });
