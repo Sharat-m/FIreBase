@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth</title>
+</head>
+<body>
+    <h1>Welcome:Firebase Auth : google</h1>
+    <p>
+        Firebase for web
+    </p>
+<div id="loginscreen">
+<button id="login">Login with google</button>
+</div>
+
+<div id="dashboard">
+<button id="logout">Logout</button>
+</div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAC5GKNZabpoG2-uKqhzvHb0S5DoC23kas",
+          authDomain: "auth-demo-f7828.firebaseapp.com",
+          projectId: "auth-demo-f7828",
+          storageBucket: "auth-demo-f7828.appspot.com",
+          messagingSenderId: "732661377371",
+          appId: "1:732661377371:web:5b3d76adec1b7062a3d27e",
+          measurementId: "G-VZX4EM0ENB"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAnalytics(app);
+
+
+        document.getElementById("login").addEventListener("click", GoogleLogin)
+        document.getElementById("logout").addEventListener("click", LogoutUser)
+
+        function GoogleLogin() {
+  console.log("Login button called");
+  const provider = new GoogleAuthProvider();
+  getAuth().signInWithPopup(provider)
+    .then((result) => {
+      console.log("User logged in successfully:", result.user);
+      // Hide the login screen and show the dashboard
+      document.getElementById("loginscreen").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      // Update the page with user information
+      const userData = result.user;
+      const userName = userData.displayName;
+      const userEmail = userData.email;
+      const userProfilePic = userData.photoURL;
+      // Update the DOM elements with user information
+      document.getElementById("userNameDisplay").textContent = userName;
+      document.getElementById("userEmailDisplay").textContent = userEmail;
+      document.getElementById("userProfilePicDisplay").src = userProfilePic;
+    })
+    .catch((error) => {
+      console.error("Error signing in with Google:", error);
+    });
+}
+
+
+
+function LogoutUser() {
+  console.log("Logout button called");
+  getAuth().signOut()
+    .then(() => {
+      console.log("User logged out successfully");
+      // Hide the dashboard and show the login screen
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginscreen").style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Error logging out:", error);
+    });
+}
+      </script>
+
+</body>
+</html>
