@@ -44,10 +44,15 @@ function addData() {
 
 //Reading the data in real time using onSnapshot
 const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
+  document.getElementById("result").innerHTML = ` `; //If we remove this line the all the data will be displayed in the web page
   snapshot.docChanges().forEach((change) => {
     //change.doc.metadata.hasPendingWrites to determine whether the change was made locally or on the server.
     const changeType = change.doc.metadata.hasPendingWrites ? "Local" : "Server";
     console.log(changeType + " change detected:", change.doc.data());
+    // Printing the user id in HTML page
+  document.getElementById("result").innerHTML += `
+ <p>${change.doc.data().username} </p>
+ `
   });
 });
 
