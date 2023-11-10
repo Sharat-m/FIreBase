@@ -7,6 +7,7 @@ import {
   onSnapshot,
   doc,
   deleteDoc,
+  updateDoc,
   getDocs,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
@@ -82,6 +83,19 @@ function remove(id) {
     console.log("Error while deleting the document", error);
   });
 }
+
+// update a value
+const docRef = doc(db, 'users', 'xNDnl2cnPDAiuDKyAk7e');
+updateDoc(docRef, {
+    username: "Updated a name: farefirst visa11"
+})
+    .then(() => {
+        console.log("Document field is updated using id", docRef);
+        alert("Updated");
+    })
+    .catch((error) => {
+        console.error("Error updating document: ", error);
+    });
 
 
 //Query snapshot
