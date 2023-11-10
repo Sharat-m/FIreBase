@@ -6,6 +6,7 @@ import {
   addDoc,
   onSnapshot,
   doc,
+  deleteDoc,
   getDocs,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
@@ -29,6 +30,7 @@ const db = getFirestore(app);
 
 document.getElementById("addDataBtn").addEventListener("click", addData);
 
+// Function to add data
 function addData() {
   const name = document.getElementById("name").value;
   addDoc(collection(db, "users"), {
@@ -42,19 +44,45 @@ function addData() {
     });
 }
 
-//Reading the data in real time using onSnapshot
+const resultDiv = document.getElementById("result");
+
+// Real-time data update using onSnapshot
 const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
-  document.getElementById("result").innerHTML = ` `; //If we remove this line the all the data will be displayed in the web page
-  snapshot.docChanges().forEach((change) => {
-    //change.doc.metadata.hasPendingWrites to determine whether the change was made locally or on the server.
-    const changeType = change.doc.metadata.hasPendingWrites ? "Local" : "Server";
-    console.log(changeType + " change detected:", change.doc.data());
-    // Printing the user id in HTML page
-  document.getElementById("result").innerHTML += `
- <p>${change.doc.data().username} </p>
- `
-  });
+  resultDiv.innerHTML = ''; 
+  snapshot.forEach((doc) => {
+    const changeType = doc.metadata.hasPendingWrites ? "Local" : "Server";
+    console.log(changeType + " change detected:", doc.data());
+  // Display the user data in HTML
+  const userHTML = `<p>${doc.data().username}</p>
+  <button class="delete-btn" data-id="${doc.id}">DELETE</button>`;
+resultDiv.innerHTML += userHTML;
 });
+});
+
+// Event listener for delete button
+resultDiv.addEventListener("click", function (event) {
+  if (event.target.tagName === "BUTTON" && event.target.classList.contains("delete-btn")) {
+    const id = event.target.dataset.id;
+    if (confirm('Are you sure to delete')) {
+      remove(id);
+    }
+  }
+});
+
+//function for delete a document
+function remove(id) {
+    const docRef = doc(collection(db, "users"), id);
+    console.log(docRef);
+    deleteDoc(docRef)
+  .then(() => {
+    console.log("Document is deleted Permently", id);
+    alert("data removed");
+  })
+  .catch((error) => {
+    console.log("Error while deleting the document", error);
+  });
+}
+
 
 //Query snapshot
 // const querySnapshot = await getDocs(collection(db, "users"));
