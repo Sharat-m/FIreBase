@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <button id="loginButton">Login</button>
+        <div class="modal" id="loginModal">
+            <div class="header">
+                <button class="close" onclick="closeModal()">X</button>
+                <header >farefirst</header>
+            </div>
+            <div class="logo-flight">
+                <p>Sign in or sign up now to unlock personalised deals and sync across all your devices</p>
+                <img src="your_image_source_here" alt="Flight image">
+            </div>
+            <div class="modal-content">
+                <button id="googleSignInButton">Signin with Google</button>
+                <button id="FacebookSignInButton">Signin with Facebook</button>
+                <button id="emailSignInButton">Signin with E-Mail</button>
+            </div>
+            <div class="privacy">
+                By continuing, you are indicating that you accept our Terms of Service and Privacy Policy.
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

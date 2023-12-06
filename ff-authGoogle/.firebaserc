@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "ff-authfacebook-6358c",
+    "staging": "ff-authfacebook-6358c"
+  },
+  "targets": {},
+  "etags": {}
+}

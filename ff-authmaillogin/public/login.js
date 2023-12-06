@@ -37,10 +37,10 @@ function LoginUser() {
       console.log("Logged in user:", user); 
     })
     .catch((error) => {
+      alert("The password is invalid");
       console.log(error.code, error.message);
     });
 }
-
 
 
 function showUserDetails(user) {
