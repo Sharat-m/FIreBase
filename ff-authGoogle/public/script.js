@@ -13,6 +13,7 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAC5GKNZabpoG2-uKqhzvHb0S5DoC23kas",
+  // authDomain: "farefirst.com",
   authDomain: "auth-demo-f7828.firebaseapp.com",
   projectId: "auth-demo-f7828",
   storageBucket: "auth-demo-f7828.appspot.com",
@@ -46,7 +47,7 @@ function GoogleLogin() {
 //show details of the user
 function showUserDetails(user) {
   document.getElementById("userDetails").innerHTML = ` 
-  <img src="${user.photoURL}" style="width:10%" >
+  <img src="${user.photoURL}" style="width:20%" >
   <p>Name :${user.displayName}</p> 
   <p>Email: ${user.email}</p>
   `
